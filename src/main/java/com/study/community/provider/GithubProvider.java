@@ -7,6 +7,7 @@ import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Component加了后不需要实例化对象类
@@ -38,6 +39,7 @@ public class GithubProvider {
 
     public GithubUser getUser(String accessToken){
         //https://api.github.com/user?access_token=
+        //https://api.github.com/users/用户名
         String url ="https://api.github.com/user";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
