@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>用户注册</title>
+    <!-- @{}的形式是链接资源文件或者访问某个请求路径th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.css}"  -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrapValidator.css" rel="stylesheet">
+    <link href="css/signin.css" th:href="@{css/signin.css}" rel="stylesheet">
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrapValidator.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+
+<body class="text-center">
+    <!--此处要写成method="POST"，不能写成th:method="POST"-->
+    <form class="form-signin" id="form-reg" action="dashboard.html" th:action="@{/reg}" method="POST" enctype="multipart/form-data">
+        <div class="panel text-center">
+        <!--<h1><span class="label label-info">基本信息</span></h1-->
+        <img style="width:100px;height:100px"  src="image/bg.jpg" id="imgEmdImg" class="border img-rounded" ondblclick="chooseImageFile('fileWGSmallImage');"/>
+        <!--button type="button" id="btnImg" class="btn btn-default" data-dismiss="modal">上传头像</button-->
+        <input type="file" name="fileWGPicture" id="fileWGSmallImage" style="display: none;" accept="image/*" onchange="showImgToView('fileWGSmallImage');" />
+        <p>双击选择头像</p>
+        </div>
+        <div class="panel panel-primary">
+        <label class="sr-only" th:text="#{login.username}">Username</label>
+        <input type="text" name="username" class="form-control" placeholder="Username"
+               th:placeholder="#{login.username}">
+        <label class="sr-only" th:text="#{login.password}">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password"
+               th:placeholder="#{login.password}">
+        <label class="sr-only" th:text="#{login.email}">Email</label>
+        <input type="text" name="email" class="form-control" placeholder="email"
+               th:placeholder="#{login.email}">
+        <label class="sr-only" th:text="#{login.phone}">phone</label>
+        <input type="text" name="phone" class="form-control" placeholder="phone"
+               th:placeholder="#{login.phone}">
+        </div>
+        <button id="btn-reg" class="btn btn-lg btn-primary btn-block" type="submit" th:text="#{login.reg}">注册</button>
+        <p class="mt-5 mb-3 text-muted">© 2017-2018    s@qq.com</p>
+        <a class="btn btn-lg" th:href="@{/loginHtml}">返回</a>
+    </form>
+
+
+</body>
+<script type="text/javascript">
+    $(function () {
+        $("#form-reg").bootstrapValidator({
+            live: 'disabled',//验证时机，enabled是内容有变化就验证（默认），disabled和submitted是提交再验证
+            excluded: [':disabled', ':hidden', ':not(:visible)'],//排除无需验证的控件，比如被禁用的或者被隐藏的
+            submitButtons: '#btn-reg',//指定提交按钮，如果验证失败则变成disabled，但我没试成功，反而加了这句话非submit按钮也会提交到action指定页面
+            message: '通用的验证失败消息',//好像从来没出现过
+            feedbackIcons: {//根据验证结果显示的各种图标
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                text: {
+                    validators: {
+                        notEmpty: {//检测非空,radio也可用
+                            message: '文本框必须输入'
+                        },
+                        stringLength: {//检测长度
+                            min: 6,
+                            max: 30,
+                            message: '长度必须在6-30之间'
+                        },
+                        regexp: {//正则验证
+                            regexp: /^[a-zA-Z0-9_\.]+$/,
+                            message: '所输入的字符不符要求'
+                        },
+                        remote: {//将内容发送至指定页面验证，返回验证结果，比如查询用户名是否存在
+                            url: '指定页面',
+                            message: 'The username is not available'
+                        },
+                        different: {//与指定文本框比较内容相同
+                            field: '指定文本框name',
+                            message: '不能与指定文本框内容相同'
+                        },
+                        emailAddress: {//验证email地址
+                            message: '不是正确的email地址'
+                        },
+                        identical: {//与指定控件内容比较是否相同，比如两次密码不一致
+                            field: 'confirmPassword',//指定控件name
+                            message: '输入的内容不一致'
+                        },
+                        date: {//验证指定的日期格式
+                            format: 'YYYY/MM/DD',
+                            message: '日期格式不正确'
+                        },
+                        choice: {//check控件选择的数量
+                            min: 2,
+                            max: 4,
+                            message: '必须选择2-4个选项'
+                        }
+                    }
+                }
+            }
+        });
+        $("#btn-reg").click(function () {//非submit按钮点击后进行验证，如果是submit则无需此句直接验证
+            $("#form-reg").bootstrapValidator('validate');//提交验证
+            if ($("#form-reg").data('bootstrapValidator').isValid()) {//获取验证结果，如果成功，执行下面代码
+                //alert("yes");//验证成功后的操作，如ajax
+            }
+        });
+    });
+
+
+    function chooseImageFile(inputFileID) {
+        $("#" + inputFileID).click();
+    }
+    //创建FileReader对象
+    var imgReader = new FileReader();
+    //正则表达式 过滤图片文件
+    regexImageFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+    //file表单改变事件，将选择的图片显示到img元素
+    function showImgToView(inputFileId) {
+        //选择图片文件
+        var imgFile = $("#" + inputFileId).get(0).files[0];
+        //判断上传文件是否为图片格式
+        if (!regexImageFilter.test(imgFile.type)) {
+            layer.msg("请选择有效的图片文件", { icon: 0, title: "提示" });
+        }
+        else
+        {
+            //readAsDataURL();//方法可以获取API异步读取的文件数据，另存为数据URL;
+            //FileReader对象的readAsDataURL方法可以将读取到的文件编码成Data URL。Data URL是一项特殊的技术，可以将资料(例如图片)内嵌在网页之中，不用放到外部文件。
+         imgReader.readAsDataURL(imgFile);
+        }
+
+        //读取文件 onload事件
+        imgReader.onload = function (evt) {
+            //将该URL绑定到img标签的src属性上，就可以实现图片的上传预览效果了。
+            $("#imgEmdImg").attr("src", evt.target.result);
+        }
+    };
+
+</script>
+</html>

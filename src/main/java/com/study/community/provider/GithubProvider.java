@@ -24,11 +24,15 @@ public class GithubProvider {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            String str =response.body().string();
-            System.out.println(str);
-            String token =str.split("&")[0].split("=")[1];
-            System.out.println(token);
-            return token;
+            if (response.code()==200) {
+                String str = response.body().string();
+                System.out.println(str);
+                String token = str.split("&")[0].split("=")[1];
+                System.out.println(token);
+                return token;
+            }else{
+                System.out.println(response.message());
+            }
             //String scop=split[1];
             //System.out.println(str);
         } catch (Exception e) {

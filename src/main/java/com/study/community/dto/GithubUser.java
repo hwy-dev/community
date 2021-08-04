@@ -1,5 +1,8 @@
 package com.study.community.dto;
 
+import lombok.Data;
+
+@Data
 public class GithubUser {
     //唯一值
     private Long id;
@@ -7,9 +10,8 @@ public class GithubUser {
     private String name;
     //描述
     private String bio;
-
-    public GithubUser() {
-    }
+    //头像
+    private String avatar_url;
 
     public Long getId() {
         return id;
@@ -33,5 +35,13 @@ public class GithubUser {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getAvatar_url() {
+        return avatar_url;
+    }
+
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
     }
 }
