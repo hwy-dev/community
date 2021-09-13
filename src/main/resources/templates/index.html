@@ -14,6 +14,16 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="js/bootstrap.min.js"></script>
 </head>
+<script type="application/javascript">
+    window.onload=function () {
+        //debugger;
+        var closable= window.localStorage.getItem("closable");
+        if (closable=="true"){
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
 <body>
 <div th:insert="~{navigation::nav}"></div>
 <div class="container-fluid main">

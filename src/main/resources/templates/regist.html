@@ -28,10 +28,10 @@
         <div class="panel panel-primary">
         <label class="sr-only" th:text="#{login.username}">Username</label>
         <input type="text" name="username" class="form-control" placeholder="Username"
-               th:placeholder="#{login.username}">
+               th:placeholder="#{login.username}" required="true">
         <label class="sr-only" th:text="#{login.password}">Password</label>
         <input type="password" name="password" class="form-control" placeholder="Password"
-               th:placeholder="#{login.password}">
+               th:placeholder="#{login.password}" required="true">
         <label class="sr-only" th:text="#{login.email}">Email</label>
         <input type="text" name="email" class="form-control" placeholder="email"
                th:placeholder="#{login.email}">

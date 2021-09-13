@@ -22,10 +22,10 @@
         <label class="sr-only" th:text="#{login.username}">Username</label>
         <!--要写上name="username",否则访问LoginController方法时，没有传username会报错-->
         <input type="text" name="username" class="form-control" placeholder="Username"
-               th:placeholder="#{login.username}" required="" autofocus="">
+               th:placeholder="#{login.username}" required="true" autofocus="">
         <label class="sr-only" th:text="#{login.password}">Password</label>
         <input type="password" name="password" class="form-control" placeholder="Password"
-               th:placeholder="#{login.password}" required="">
+               th:placeholder="#{login.password}" required="true">
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> [[#{login.remember}]]

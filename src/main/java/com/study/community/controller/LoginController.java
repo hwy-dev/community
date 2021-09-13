@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,6 +84,11 @@ public class LoginController {
                            HttpServletResponse response) {
         //String sessionCode = (String)session.getAttribute("code"); // 生成的验证码
         // 忽略大小写, 比较用户输入的验证码与生成的验证码
+        if (username.equals("")){
+            model.addAttribute("error","用户为空注册失败");
+            return "redirect:/register"; // 注册失败跳转到注册界面
+        }
+
         if (username!=null && !username.equals("") && password!=null && !password.equals("")) {
             UserExample userExample=new UserExample();
             UserExample.Criteria cri = userExample.createCriteria();
@@ -93,6 +97,7 @@ public class LoginController {
             List<User> users = userMapper.selectByExample(userExample);
             if (users!=null && users.size()>0) {
                 //System.out.println("注册失败");
+                model.addAttribute("error","用户已经存在注册失败");
                 return "redirect:/register"; // 注册失败跳转到注册界面
             }
             else{
