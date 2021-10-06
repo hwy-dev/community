@@ -8,6 +8,7 @@
 [bootstrap](https://v3.bootcss.com/css/#grid)
 [lombok](https://projectlombok.org/)
 [generator](http://mybatis.org/generator/index.html)
+[editor](http://editor.md.ipandao.com/)
 ## 工具
 [Git](https://git-scm.com/download)
 [visual-paradigm](https://www.visual-paradigm.com/cn/)

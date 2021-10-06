@@ -113,3 +113,8 @@
     margin-right: 8px;
     white-space: normal;
 }
+
+.footer {
+    padding: 10px 25%;
+    color: #6666;
+}

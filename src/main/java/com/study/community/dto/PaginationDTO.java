@@ -3,14 +3,22 @@ package com.study.community.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaginationDTO {
-    private List<QuestionDTO> questions;
+public class PaginationDTO<T> {
+    private List<T> data;
     private boolean showPrevious;
     private boolean showFirstPage;
     private boolean showNext;
     private boolean showEndPage;
     private Integer page;
     private Integer totalPage;
+
+    public List<T> getData() {
+        return data;
+    }
+
+    public void setData(List<T> data) {
+        this.data = data;
+    }
 
     public Integer getTotalPage() {
         return totalPage;
@@ -21,14 +29,6 @@ public class PaginationDTO {
     }
 
     private List<Integer> pages=new ArrayList<>();
-
-    public List<QuestionDTO> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<QuestionDTO> questions) {
-        this.questions = questions;
-    }
 
     public boolean isShowPrevious() {
         return showPrevious;
